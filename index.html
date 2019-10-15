@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="index.css">
+    <title>Document</title>
+</head>
+<body>
+    <h2 id="js-pokemon-name"></h2>
+    <h3 id="js-pokemon-genus"></h3>
+
+    <img id="js-pokemon-image" src="" alt="">
+
+    <section role="contentinfo" aria-label="Pokemon Game Data">
+        <p>type: <span id="js-pokemon-types"></span></p>
+        <p>abilities: <span id="js-pokemon-abilities"></span></p>
+    </section>
+
+    <section role="contentinfo" aria-label="Pokemon Physical Data">
+        <p>height: <span id="js-pokemon-height"></span></p>
+        <p>weight: <span id="js-pokemon-weight"></span></p>
+        <p>cry: <audio controls src="" id="js-pokemon-cry-mp3">
+        </audio></p>
+    </section>
+        
+    <section role="contentinfo" aria-label="Pokedex Entry">
+        <h3>pokedex entry</h3>
+        <p id="js-pokedex-entry"></p>
+    </section>
+
+    <section role="contentinfo" aria-label="evolution chain">
+        <h3>Evolutions</h3>
+        <ul id="js-evolution-chain">
+        </ul>
+    </section>
+
+    <section role="contentinfo" aria-label="stats">
+        <h3>Stats</h3>
+        
+        <table>
+                <tr>
+                    <td class="stat-name">
+                        <span class="stat-label">HP:</span><span id="js-hp-value" class="stat-value"></span>
+                    </td>
+                    <td class="stat-display">
+                        <div id="js-hp-display" class="stat"> </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="stat-name">
+                        <span class="stat-label">Attack:</span>
+                        <span id="js-attack-value" class="stat-value"></span>
+                    </td>
+                    <td class="stat-display">
+                        <div id="js-attack-display" class="stat"> </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="stat-name">
+                        <span class="stat-label">Defense:</span>
+                        <span id="js-defense-value" class="stat-value"></span>
+                    </td>
+                    <td class="stat-display">
+                        <div id="js-defense-display" class="stat"> </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="stat-name">
+                        <span class="stat-label">Sp. Atk:</span>
+                        <span id="js-special-attack-value" class="stat-value"></span>
+                    </td>
+                    <td class="stat-display">
+                        <div id="js-special-attack-display" class="stat"> </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="stat-name">
+                        <span class="stat-label">Sp. Def:</span>
+                        <span id="js-special-defense-value" class="stat-value"></span>
+                    </td>
+                    <td class="stat-display">
+                        <div id="js-special-defense-display" class="stat"> </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="stat-name">
+                        <span class="stat-label">Speed:</span>
+                        <span id="js-speed-value" class="stat-value"></span>
+                    </td>
+                    <td class="stat-display">
+                        <div id="js-speed-display" class="stat"> </div>
+                    </td>
+                </tr>
+              </table>
+         
+    </section>
+
+    <section role="contentinfo" aria-label="Moves">
+        <h3>Level up moves</h3>
+    </section>
+
+    <section role="contentinfo" aria-label="Forms">
+        <h3>Forms</h3>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
+</body>
+</html>
