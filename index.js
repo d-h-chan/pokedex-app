@@ -235,7 +235,9 @@ function populatePokemonForms(pokemonSpeciesData) {
                     
                     for (const item of formData) {
                         console.log(formData);
-                        appendFormImageUrl(item.name,item.sprites.front_default);
+                        if (item.sprites.front_default !== null) {
+                            appendFormImageUrl(item.name,item.sprites.front_default);
+                        }
                     }
                 });
         });
@@ -260,4 +262,4 @@ function watchForm(pokemonName) {
         });
 }
 
-$(watchForm("pikachu"));
+$(watchForm("blaziken"));
