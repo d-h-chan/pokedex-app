@@ -32,6 +32,48 @@ function getPokeIdFromPokemonUrl(url) {
     return res[1].replace("/", "");
 }
 
+function getTypeColor(type) {
+    switch (type.toLowerCase) {
+        case "bug": 
+            return "#A0C331";
+        case "dark": 
+            return "#6A697B";
+        case "dragon": 
+            return "#0373BF";
+        case "electric": 
+            return "#FDDC51";
+        case "fairy": 
+            return "#F199E3";
+        case "fighting": 
+            return "#D4445B";
+        case "fire": 
+            return "#FFA34B";
+        case "flying": 
+            return "#A4B9E6";
+        case "ghost": 
+            return "#6870C3";
+        case "grass": 
+            return "#5BC064";
+        case "ground": 
+            return "#D48856";
+        case "ice": 
+            return "#83CFC5";
+        case "normal": 
+            return "#9D9EA0";
+        case "poison": 
+            return "#B263D6";
+        case "psychic": 
+            return "#F8858A";
+        case "rock": 
+            return "#CEC195";
+        case "steel": 
+            return "#4F9FA8";
+        case "water": 
+            return "#66AFD8";
+        default: 
+            break;
+    }
+}
 
 function populateMainImage(pokemonData) {
     $("#js-pokemon-image")
@@ -73,18 +115,28 @@ function populatePokemonBasicData(pokemonData) {
 }
 
 function populatePokemonAttributeData(pokemonData) {
-    let types = "";
-    for (let i = pokemonData.types.length - 1; i >= 0; i--) {
-        types += pokemonData.types[i].type.name;
-        types += " "
+    let type1 = "";
+    let type2 = ""
+    if (pokemonData.types.length > 1) {
+        type1 = pokemonData.types[1].type.name;
+        type2 = pokemonData.types[0].type.name;
+        $("#js-pokemon-type-1").text(type1);
+        $("#js-pokemon-type-2").text(type2);
+        $("#js-pokemon-type-2").show();
     }
-    $("#js-pokemon-types").text(types);
+    else {
+        type1 =pokemonData.types[0].type.name;
+        $("#js-pokemon-type-1").text(type1);
+        $("#js-pokemon-type-2").hide();
+    }
+
+    /*
     let abilities = "";
     for (let i = 0; i < pokemonData.abilities.length; i++) {
         abilities += pokemonData.abilities[i].ability.name;
         abilities += " "
     }
-    $("#js-pokemon-abilities").text(abilities);
+    $("#js-pokemon-abilities").text(abilities);*/
 }
 
 
@@ -109,18 +161,16 @@ $.fn.exists = function () {
 function appendFormImage(pokemonName, pokemonId) {
     let apiUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
     //let spriteUrl = aniSpriteUrl + pokemonName + ".png";
-
+    console.log(apiUrl);
     $.get(apiUrl)
     .done(function() { 
         // Do something now you know the image exists.
         let element = $("ul").find(`[data-pokemon-name='${pokemonName}']`);
-        if (!element.exists()) {
+        if (!element.exists() && !pokemonName.includes("totem")) {
             $("#js-pokemon-forms").append(
                 `<li data-pokemon-name="${pokemonName}"><img src="${apiUrl}" alt=""></li>`
             );
-        } else {
-            element.attr()
-        }
+        } 
     }) 
 }
 
@@ -129,7 +179,8 @@ function appendFormImageUrl(pokemonName, apiUrl) {
     $.get(apiUrl)
     .done(function() { 
         // Do something now you know the image exists.
-        if (!$("ul").find(`[data-pokemon-name='${pokemonName}']`).exists()) {
+        let element = $("ul").find(`[data-pokemon-name='${pokemonName}']`);
+        if (!element.exists() && !pokemonName.includes("totem")) {
             $("#js-pokemon-forms").append(
                 `<li data-pokemon-name="${pokemonName}"><img src="${apiUrl}" alt=""></li>`
             );
@@ -160,17 +211,62 @@ function populateEvolutionChain(pokemonSpeciesData) {
 }
 
 function getPercentageForStat(statValue) {
-    return statValue/180*100;
+    return statValue/255*100;
 }
 
 function getStatColor(statValue) {
-    //
+    if (statValue >= 200) {
+        return "#02ffff";
+    }
+    if (statValue >= 180) {
+        return "#02ffaa";
+    }
+    if (statValue >= 170) {
+        return "#02ff7f";
+    }
+    if (statValue >= 160) {
+        return "#02ff55";
+    }
+    if (statValue >= 150) {
+        return "#02ff2a";
+    }
+    if (statValue >= 140) {
+        return "#34ff00";
+    }
+    if (statValue >= 130) {
+        return "#66ff00";
+    }
+    if (statValue >= 120) {
+        return "#9aff00";
+    }
+    if (statValue >= 110) {
+        return "#ccff00";
+    }
+    if (statValue >= 100) {
+        return "#fffe00";
+    }
+    if (statValue >= 90) {
+        return "#ffcc00";
+    }
+    if (statValue >= 80) {
+        return "#ff9800";
+    }
+    if (statValue >= 70) {
+        return "#ff6600";
+    }
+    if (statValue >= 60) {
+        return "#ff3200";
+    }
+    return "#ff0000";
+    
 }
 
 function populatePokemonStats(pokemonData){
     let arrStats = pokemonData.stats;
     for (const stat of arrStats) {
-        $(`#js-${stat.stat.name}-display`).width(`${getPercentageForStat(stat.base_stat)}%`); 
+        $(`#js-${stat.stat.name}-display`)
+            .width(`${getPercentageForStat(stat.base_stat)}%`)
+            .css("background-color", getStatColor(stat.base_stat)); 
         $(`#js-${stat.stat.name}-value`).text(stat.base_stat);  
     }
 }
@@ -210,6 +306,7 @@ function populateMoves(pokemonData) {
 
 
 function populatePokemonForms(pokemonSpeciesData) {
+    $("#js-pokemon-forms").empty();
     let varietyUrls = [];
     for (const varieties of pokemonSpeciesData.varieties) {
         if (varieties.is_default === false) {
@@ -234,7 +331,6 @@ function populatePokemonForms(pokemonSpeciesData) {
                 .then(responses => {return responses;})
                 .then(responses => Promise.all(responses.map(r => r.json())))
                 .then(formData => {
-                    $("#js-pokemon-forms").empty();
                     for (const item of formData) {
                         console.log(formData);
                         if (item.sprites.front_default !== null) {
