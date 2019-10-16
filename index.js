@@ -140,6 +140,7 @@ function appendFormImageUrl(pokemonName, apiUrl) {
 function populateEvolutionChain(pokemonSpeciesData) {
     callApi(pokemonSpeciesData.evolution_chain.url)
         .then (function(pokemonEvolutionData) {
+            $("#js-evolution-chain").empty();
             //first form data. .url for species
             appendEvolutionImage(pokemonEvolutionData.chain.species.name, getPokeIdFromSpeciesUrl(pokemonEvolutionData.chain.species.url));
             //loop through
@@ -198,6 +199,7 @@ function populateMoves(pokemonData) {
             return responses;
     }).then(responses => Promise.all(responses.map(r => r.json())))
     .then(responseJsons => {
+        $("#js-level-up-moves").empty();
         for (const responseJson of responseJsons) {
             $("#js-level-up-moves").append(
             `<li>${responseJson.name} ${responseJson.type.name} ${moveData[responseJson.name]}</li>`
@@ -232,7 +234,7 @@ function populatePokemonForms(pokemonSpeciesData) {
                 .then(responses => {return responses;})
                 .then(responses => Promise.all(responses.map(r => r.json())))
                 .then(formData => {
-                    
+                    $("#js-pokemon-forms").empty();
                     for (const item of formData) {
                         console.log(formData);
                         if (item.sprites.front_default !== null) {
@@ -243,7 +245,7 @@ function populatePokemonForms(pokemonSpeciesData) {
         });
 }
 
-function watchForm(pokemonName) {  
+function loadPage(pokemonName) {  
     callApi(generatePokemonUrl(pokemonName))
         .then(function(pokemonData) {
             populateMainImage(pokemonData);
@@ -262,4 +264,13 @@ function watchForm(pokemonName) {
         });
 }
 
-$(watchForm("blaziken"));
+function watchForm() {
+    $('form').submit(event => {
+        event.preventDefault();
+        const searchTerm = $('#js-pokemon-search').val();
+        loadPage(searchTerm);
+    });
+}
+
+loadPage(1);
+$(watchForm());
