@@ -21,20 +21,23 @@ ul {
     padding:0; 
 }
 
-ul#js-evolution-chain li {
+ul#js-evolution-chain li, ul#js-pokemon-forms li{
 	display: inline;
 }
 
 table {
-    width: 100%;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 .stat-name {
-    width: 35%;
+    width: 110px;
 }
 
 .stat-display {
-    width: 65%;
+    width: auto;
 }
 
 .stat-label{

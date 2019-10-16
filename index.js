@@ -2,7 +2,6 @@
 
 const url="https://pokeapi.co/api/v2/";
 const aniSpriteUrl="https://play.pokemonshowdown.com/sprites/ani/";
-const staticSpriteUrl="https://play.pokemonshowdown.com/sprites/dex/";
 const aniCryUrl="https://play.pokemonshowdown.com/audio/cries/";
 
 
@@ -23,15 +22,15 @@ function generatePokemonSpeciesUrl(strPokemonName) {
     return url + "pokemon-species/" + strPokemonName;
 }
 
-function getPokeApiSprite(id) {
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-}
-
 function getPokeIdFromSpeciesUrl(url) {
     let res = url.split("/pokemon-species/");
     return res[1].replace("/", "");
 }
-//"https://pokeapi.co/api/v2/pokemon-species/61/"
+
+function getPokeIdFromPokemonUrl(url) {
+    let res = url.split("/pokemon/");
+    return res[1].replace("/", "");
+}
 
 
 function populateMainImage(pokemonData) {
@@ -88,23 +87,57 @@ function populatePokemonAttributeData(pokemonData) {
     $("#js-pokemon-abilities").text(abilities);
 }
 
+
 function appendEvolutionImage(pokemonName, pokemonId) {
     let apiUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
-    let spriteUrl = staticSpriteUrl + pokemonName + ".png";
+    //let spriteUrl = aniSpriteUrl + pokemonName + ".png";
 
     $("#js-evolution-chain").append(
-        `<li data-pokemon-id="${pokemonId}"><img src="" alt=""></li>`
+        `<li data-pokemon-name="${pokemonName}"><img src="${apiUrl}" alt=""></li>`
     );
-    $("#js-evolution-chain").find(`[data-pokemon-id='${pokemonId}'] img`)
-        .attr("src", apiUrl)
+    /*$("#js-evolution-chain").find(`[data-pokemon-id='${pokemonId}'] img`)
         .on("error", function() {
             $(this).attr("src", apiUrl);
         }
-    );
-
+    );*/
 }
 
-function getEvolutionChain(pokemonSpeciesData) {
+$.fn.exists = function () {
+    return this.length !== 0;
+}
+
+function appendFormImage(pokemonName, pokemonId) {
+    let apiUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+    //let spriteUrl = aniSpriteUrl + pokemonName + ".png";
+
+    $.get(apiUrl)
+    .done(function() { 
+        // Do something now you know the image exists.
+        let element = $("ul").find(`[data-pokemon-name='${pokemonName}']`);
+        if (!element.exists()) {
+            $("#js-pokemon-forms").append(
+                `<li data-pokemon-name="${pokemonName}"><img src="${apiUrl}" alt=""></li>`
+            );
+        } else {
+            element.attr()
+        }
+    }) 
+}
+
+function appendFormImageUrl(pokemonName, apiUrl) {
+    
+    $.get(apiUrl)
+    .done(function() { 
+        // Do something now you know the image exists.
+        if (!$("ul").find(`[data-pokemon-name='${pokemonName}']`).exists()) {
+            $("#js-pokemon-forms").append(
+                `<li data-pokemon-name="${pokemonName}"><img src="${apiUrl}" alt=""></li>`
+            );
+        }
+    })
+}
+
+function populateEvolutionChain(pokemonSpeciesData) {
     callApi(pokemonSpeciesData.evolution_chain.url)
         .then (function(pokemonEvolutionData) {
             //first form data. .url for species
@@ -126,7 +159,7 @@ function getEvolutionChain(pokemonSpeciesData) {
 }
 
 function getPercentageForStat(statValue) {
-    return statValue/200*100;
+    return statValue/180*100;
 }
 
 function getStatColor(statValue) {
@@ -141,6 +174,73 @@ function populatePokemonStats(pokemonData){
     }
 }
 
+function populateMoves(pokemonData) {
+    let moveData = {};
+    let moveUrls = [];
+    for (const moves of pokemonData.moves) {
+        let version_group_details = moves.version_group_details;
+        for (const version_group_detail of version_group_details) {
+            if (version_group_detail.version_group.name === "ultra-sun-ultra-moon" 
+                && version_group_detail.move_learn_method.name === "level-up"
+                && version_group_detail.level_learned_at > 1) {
+                    moveData[moves.move.name] = version_group_detail.level_learned_at;
+                    moveUrls.push(moves.move.url);
+
+                }
+        }
+    }
+    // map every url to the promise of the fetch
+    let requests = moveUrls.map(url => fetch(url));
+
+    // Promise.all waits until all jobs are resolved
+    Promise.all(requests)
+        .then(responses => {
+            return responses;
+    }).then(responses => Promise.all(responses.map(r => r.json())))
+    .then(responseJsons => {
+        for (const responseJson of responseJsons) {
+            $("#js-level-up-moves").append(
+            `<li>${responseJson.name} ${responseJson.type.name} ${moveData[responseJson.name]}</li>`
+            );
+        }
+    });
+}
+
+
+function populatePokemonForms(pokemonSpeciesData) {
+    let varietyUrls = [];
+    for (const varieties of pokemonSpeciesData.varieties) {
+        if (varieties.is_default === false) {
+            appendFormImage(varieties.pokemon.name, getPokeIdFromPokemonUrl(varieties.pokemon.url));
+            varietyUrls.push(varieties.pokemon.url);
+        }
+    }
+
+    let requests = varietyUrls.map(url => fetch(url));
+    // Promise.all waits until all jobs are resolved
+    Promise.all(requests)
+        .then(responses => {return responses;})
+        .then(responses => Promise.all(responses.map(r => r.json())))
+        .then(pokemonData => {
+            let formUrls = []
+            for (const item of pokemonData) {
+                formUrls.push(item.forms[0].url);
+            }
+        
+            let formRequests = formUrls.map(url => fetch(url))
+            Promise.all(formRequests)
+                .then(responses => {return responses;})
+                .then(responses => Promise.all(responses.map(r => r.json())))
+                .then(formData => {
+                    
+                    for (const item of formData) {
+                        console.log(formData);
+                        appendFormImageUrl(item.name,item.sprites.front_default);
+                    }
+                });
+        });
+}
+
 function watchForm(pokemonName) {  
     callApi(generatePokemonUrl(pokemonName))
         .then(function(pokemonData) {
@@ -148,14 +248,16 @@ function watchForm(pokemonName) {
             populatePokemonBasicData(pokemonData);
             populatePokemonAttributeData(pokemonData);
             populatePokemonStats(pokemonData);
+            populateMoves(pokemonData);
             console.log(pokemonData);
         });
     callApi(generatePokemonSpeciesUrl(pokemonName))
         .then(function(pokemonSpeciesData) {
             populatePokemonSpeciesBasicData(pokemonSpeciesData);
-            getEvolutionChain(pokemonSpeciesData);
+            populateEvolutionChain(pokemonSpeciesData);
+            populatePokemonForms(pokemonSpeciesData);
             console.log(pokemonSpeciesData);
         });
 }
 
-$(watchForm("cloyster"));
+$(watchForm("pikachu"));
