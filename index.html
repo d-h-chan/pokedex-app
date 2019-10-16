@@ -5,19 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito|Nunito+Sans:400,400i,700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="index.css">
     <title>Document</title>
 </head>
 <body>
     <main>
-        <h2 id="js-pokemon-name"></h2>
-        <h3 id="js-pokemon-genus"></h3>
-
-        <img id="js-pokemon-image" src="" alt="">
-
-        <section role="contentinfo" aria-label="Pokemon Game Data">
+        <section role="contentinfo" aria-label="Main Header">
+            <h2 id="js-pokemon-name"></h2>
+            <h4 id="js-pokemon-genus"></h4>
+            <img id="js-pokemon-image" src="" alt="">
             <p>type: <span id="js-pokemon-types"></span></p>
-            <p>abilities: <span id="js-pokemon-abilities"></span></p>
+            <p class="hidden">abilities: <span id="js-pokemon-abilities"></span></p>
         </section>
 
         <section role="contentinfo" aria-label="Search Bar">
@@ -35,8 +33,8 @@
         </section>
 
         <section role="contentinfo" aria-label="Pokedex Entry">
-            <h3>pokedex entry</h3>
-            <p id="js-pokedex-entry"></p>
+            <h3>pokedéx entry</h3>
+            <p id="js-pokedex-entry" class="left-align"></p>
         </section>
 
         <section role="contentinfo" aria-label="evolution chain">

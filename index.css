@@ -1,10 +1,39 @@
 * {
     box-sizing: border-box;
     text-align: center;
+    font-family: 'Nunito', sans-serif;
 }
 
 body {
     font-family: 'Roboto', sans-serif;
+    background-color:#F8F8F8;
+}
+
+main {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2, h3, h4 {
+    text-transform: uppercase;
+    font-family: 'Nunito Sans', sans-serif;
+    margin-bottom: 7px;
+}
+
+h4 {
+    font-style: italic;
+    font-weight: normal;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+p {
+    margin: 10px;
+}
+
+img {
+    margin: 5px;
 }
 
 button:hover {
@@ -12,7 +41,11 @@ button:hover {
 }
 
 section {
-    border: 1px solid gray;
+    margin: 10px;
+    padding: 10px;    
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px #DCDCDC;
 }
 
 ul {
@@ -53,4 +86,12 @@ table {
     height: 10px;
     background-color: greenyellow;
     border-radius: 2px;
+}
+
+.hidden {
+    display: none;
+}
+
+.left-align {
+    text-align: left;
 }

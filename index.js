@@ -58,7 +58,7 @@ function populatePokemonSpeciesBasicData(pokemonSpeciesData) {
     let genera = pokemonSpeciesData.genera;
     for (let i = 0; i < genera.length; i++) {
         if (genera[i].language.name === "en") {
-            $("#js-pokemon-genus").text(genera[i].genus);
+            $("#js-pokemon-genus").text("the " + genera[i].genus);
             break;
         }
     }
