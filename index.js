@@ -34,13 +34,13 @@ function getPokeIdFromPokemonUrl(url) {
 
 function getTypeImage(type) {
     const typeCaps = type.charAt(0).toUpperCase() + type.slice(1)
-    console.log(`./assets/Icon_${typeCaps}.png`);
+    //console.log(`./assets/Icon_${typeCaps}.png`);
     return `./assets/Icon_${typeCaps}.png`;
 }
 
 function populateMainImage(pokemonData) {
     $("#js-pokemon-image")
-        .attr("src", aniSpriteUrl + pokemonData.name + ".gif")
+        .attr("src", aniSpriteUrl + pokemonData.species.name + ".gif")
         .on("error", function() {
             $(this).attr("src", pokemonData.sprites.front_default);;
         });
@@ -87,7 +87,7 @@ function getFullWeightData(weight) {
 
 //name, height, weight, cry, type, abilities, dex number (id)
 function populatePokemonBasicData(pokemonData) {
-    $("#js-pokemon-name").text(pokemonData.name);
+    $("#js-pokemon-name").text(pokemonData.species.name);
     $("#js-pokemon-weight").text(getFullWeightData(pokemonData.weight));
     $("#js-pokemon-height").text(getFullHeightData(pokemonData.height));
     populateCry(pokemonData);
@@ -365,12 +365,25 @@ function populatePokemonForms(pokemonSpeciesData) {
         });
 }
 
+function populateLeftRightButtons(pokemonData) {
+    //$('#js-left-button')
+    let left = (pokemonData.id === 1) ? 807 : pokemonData.id - 1;
+    let right = (pokemonData.id === 807) ? 1: pokemonData.id + 1;
+    $('#js-left-button').attr("data-pokemon-id", left);
+    $('#js-right-button').attr("data-pokemon-id", right);
+    $('#js-left-button').prop("disabled", false);
+    $('#js-right-button').prop("disabled", false);
+}
+
 function loadPage(pokemonName) {  
     $("#js-pokemon-search").val("");
+    $('#js-left-button').prop("disabled", true);
+    $('#js-right-button').prop("disabled", true);
     callApi(generatePokemonUrl(pokemonName))
         .then(function(pokemonData) {
             populateMainImage(pokemonData);
             populatePokemonBasicData(pokemonData);
+            populateLeftRightButtons(pokemonData);
             populatePokemonAttributeData(pokemonData);
             populatePokemonStats(pokemonData);
             populateMoves(pokemonData);
@@ -389,6 +402,7 @@ function loadPage(pokemonName) {
 
 function watchForm() {
     $('form').submit(event => {
+        console.log(event);
         event.preventDefault();
         const searchTerm = $('#js-pokemon-search').val();
         loadPage(searchTerm);
@@ -401,6 +415,20 @@ function watchForm() {
     $('#cry-play-button').on('click', function(event){
         $('#js-pokemon-cry-mp3')[0].play();
     });
+
+    $('#js-play-button').on('click', function(event){
+        $('#js-pokemon-cry-mp3')[0].play();
+    });
+
+    $('#js-left-button').on('click', function(event){
+        loadPage($(this).attr("data-pokemon-id"));
+    });
+
+    $('#js-right-button').on('click', function(event){
+        loadPage($(this).attr("data-pokemon-id"));
+    });
+
+    $('#js-pokemon-cry-mp3')[0].volume = 0.5;
 
     loadPage(1);
 }

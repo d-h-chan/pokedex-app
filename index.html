@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Nunito|Nunito+Sans:400,400i,700&display=swap" rel="stylesheet">    <link rel="stylesheet" href="index.css">
     <title>Document</title>
 </head>
 <body>
     <main>
-        <section role="contentinfo" aria-label="Main Header">
+        <section id = "js-main-section"role="contentinfo" aria-label="Main Header">
             <h2 id="js-pokemon-name"></h2>
             <h4 id="js-pokemon-genus"></h4>
             <img id="js-pokemon-image" src="" alt="">
             <br>
-            
             <img id="js-pokemon-type-1" class="pokemon-type" src="" alt="">
             <img id="js-pokemon-type-2" class="pokemon-type" src="" alt="">
             
@@ -24,13 +23,14 @@
             <p class="hidden">abilities: <span id="js-pokemon-abilities"></span></p>
         </section>
 
-        <section id="search-bar-section" role="contentinfo" aria-label="Search Bar">
+        <section id="js-search-bar-section" role="contentinfo" aria-label="Search Bar">
             <form >
+                <button id="js-random-button" type="button"><i class="fa fa-dice"></i></button>
                 <input type="text" placeholder="Search.." name="search" id="js-pokemon-search" required>
                 <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
             </form>
-            <button class = "float-button float-button-left"><i class="fa fa-angle-double-left"></i> </button>
-            <button class = "float-button float-button-right"><i class="fa fa-angle-double-right"></i> </button>
+            <button id="js-left-button" data-pokemon-id="" class="float-button float-button-left"><i class="fa fa-angle-double-left"></i> </button>
+            <button id="js-right-button" data-pokemon-id="" class="float-button float-button-right"><i class="fa fa-angle-double-right"></i> </button>
 
         </section>
                 
@@ -38,7 +38,7 @@
             <p>Height: <span id="js-pokemon-height"></span></p>
             <p>Weight: <span id="js-pokemon-weight"></span></p>
             <p>Cry: <audio src="" id="js-pokemon-cry-mp3"></audio>
-                <button id="cry-play-button">
+                <button id="js-play-button">
                 <i class="fa fa-play"></i></button> </p>
         </section>
 

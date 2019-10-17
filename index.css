@@ -46,11 +46,6 @@ section {
     position: relative;
 }
 
-form button {
-    height: 25px;
-    width: 25px;
-}
-
 
 ul {
     list-style: none;
@@ -123,28 +118,26 @@ form {
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 75%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
 
 .fa {
     line-height: inherit;
-    color: gray
+    color: gray;
+    vertical-align: center;
+    padding: 7px 3px;
 }
 
-.fa-search {
+.fa-search, .fa-dice {
     font-size: 18px;
 }
 
-.search-button {
-    height: 35px;
-    width: 40px;
-    vertical-align: center;
-}
 
 input {
     height: 30px;
-    width: 60%;
+    width: 40%;
     font-size: 16px;
 }
 
@@ -162,6 +155,10 @@ input {
 
 .float-button-left {
     left: 30px;
+}
+
+.float-button-middle {
+    left: 20%;
 }
 
 .float-button-right {
@@ -200,12 +197,9 @@ figure{
     font-size: 13px;
 }
 
-#cry-play-button{
-    height: 25px;
-    width: 50px;
-    font-size: 14px;
-    margin: 0 10px;
-    border: 2px solid #E8E8E8;
+#js-play-button{
+    font-size: 12px;
+    padding: 0 12px;
 }
 
 button {
@@ -219,3 +213,8 @@ button:hover {
     cursor: pointer;
     background-color: #E8E8E8;
 }
+
+.button-disabled{
+    pointer-events: none;
+}
+
