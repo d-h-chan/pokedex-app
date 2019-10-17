@@ -24,10 +24,12 @@
         </section>
 
         <section id="js-search-bar-section" role="contentinfo" aria-label="Search Bar">
-            <form >
-                <button id="js-random-button" type="button"><i class="fa fa-dice"></i></button>
-                <input type="text" placeholder="Search.." name="search" id="js-pokemon-search" required>
-                <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+            <form autocomplete="off">
+                <div class="autocomplete">
+                    <button id="js-random-button" type="button"><i class="fa fa-dice"></i></button>
+                    <input type="text" placeholder="Search.." name="search" id="js-pokemon-search" required>
+                    <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+                </div>
             </form>
             <button id="js-left-button" data-pokemon-id="" class="float-button float-button-left"><i class="fa fa-angle-double-left"></i> </button>
             <button id="js-right-button" data-pokemon-id="" class="float-button float-button-right"><i class="fa fa-angle-double-right"></i> </button>

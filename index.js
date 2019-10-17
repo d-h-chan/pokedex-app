@@ -4,6 +4,7 @@ const url="https://pokeapi.co/api/v2/";
 const aniSpriteUrl="https://play.pokemonshowdown.com/sprites/ani/";
 const aniCryUrl="https://play.pokemonshowdown.com/audio/cries/";
 
+const POKEMON_NAMES = [];
 
 async function callApi(url) {
     try {
@@ -48,7 +49,7 @@ function populateMainImage(pokemonData) {
 
 function populateCry(pokemonData) {    
     $("#js-pokemon-cry-mp3")
-        .attr("src", aniCryUrl + pokemonData.name + ".mp3");
+        .attr("src", aniCryUrl + pokemonData.species.name + ".mp3");
 }
 
 //genus, flavor text
@@ -75,8 +76,9 @@ function getFullHeightData(height) {
     let heightInches = ((heightFeet%1) * 12).toFixed(0);
     if (heightInches == 12) {
         heightInches = 0;
+        heightFeet += 1;
     }
-    return `${heightFeet.toFixed(0)}'${heightInches}" (${heightMeters}m)`;
+    return `${Math.floor(heightFeet)}'${heightInches}" (${heightMeters.toFixed(1)}m)`;
 }
 
 function getFullWeightData(weight) {
@@ -91,6 +93,15 @@ function populatePokemonBasicData(pokemonData) {
     $("#js-pokemon-weight").text(getFullWeightData(pokemonData.weight));
     $("#js-pokemon-height").text(getFullHeightData(pokemonData.height));
     populateCry(pokemonData);
+}
+
+function getRandomPokemonNumber() {
+    let min=1; 
+    let max=807;  
+    let random = 
+    Math.floor(Math.random() * (+max - +min)) + +min;
+    console.log(random);
+    return random;
 }
 
 
@@ -400,38 +411,51 @@ function loadPage(pokemonName) {
         });
 }
 
-function watchForm() {
-    $('form').submit(event => {
-        console.log(event);
-        event.preventDefault();
-        const searchTerm = $('#js-pokemon-search').val();
-        loadPage(searchTerm);
-    });
+function initialize() {
 
-    $('#js-evolution-chain').on('click', 'li button', function(event) {
-        loadPage($(this).find(".caption").text());
-    });
+    //https://pokeapi.co/api/v2/pokemon/?limit=807
+    callApi("https://pokeapi.co/api/v2/pokemon/?limit=807")
+        .then(function(response) {
+            for (const pokemon of response.results) {
+                POKEMON_NAMES.push(pokemon.name);
+            }
+            console.log(POKEMON_NAMES);
 
-    $('#cry-play-button').on('click', function(event){
-        $('#js-pokemon-cry-mp3')[0].play();
-    });
-
-    $('#js-play-button').on('click', function(event){
-        $('#js-pokemon-cry-mp3')[0].play();
-    });
-
-    $('#js-left-button').on('click', function(event){
-        loadPage($(this).attr("data-pokemon-id"));
-    });
-
-    $('#js-right-button').on('click', function(event){
-        loadPage($(this).attr("data-pokemon-id"));
-    });
-
-    $('#js-pokemon-cry-mp3')[0].volume = 0.5;
-
-    loadPage(1);
+            $('form').submit(event => {
+                event.preventDefault();
+                const searchTerm = $('#js-pokemon-search').val();
+                loadPage(searchTerm);
+            });
+        
+            $('#js-evolution-chain').on('click', 'li button', function(event) {
+                loadPage($(this).find(".caption").text());
+            });
+        
+            $('#cry-play-button').on('click', function(event){
+                $('#js-pokemon-cry-mp3')[0].play();
+            });
+        
+            $('#js-play-button').on('click', function(event){
+                $('#js-pokemon-cry-mp3')[0].play();
+            });
+        
+            $('#js-left-button').on('click', function(event){
+                loadPage($(this).attr("data-pokemon-id"));
+            });
+        
+            $('#js-right-button').on('click', function(event){
+                loadPage($(this).attr("data-pokemon-id"));
+            });
+        
+            $('#js-random-button').on('click', function(event){
+                loadPage(getRandomPokemonNumber());
+            });
+        
+            $('#js-pokemon-cry-mp3')[0].volume = 0.5;
+        
+            loadPage(1);
+        }
+    );  
 }
 
-$(watchForm());
-
+$(initialize());
