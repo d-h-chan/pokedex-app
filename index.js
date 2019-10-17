@@ -33,7 +33,7 @@ function getPokeIdFromPokemonUrl(url) {
 }
 
 function getTypeImage(type) {
-    return `assets/Icon_${type}.png`;
+    return `../assets/Icon_${type}.png`;
 }
 
 function populateMainImage(pokemonData) {
@@ -255,6 +255,30 @@ function populatePokemonStats(pokemonData){
     }
 }
 
+function sortTable() {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("js-level-up-moves");
+    switching = true;
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+     
+      for (i = 1; i < (rows.length - 1); i++) {
+        shouldSwitch = false;
+        x = rows[i].getElementsByTagName("TD")[0];
+        y = rows[i + 1].getElementsByTagName("TD")[0];
+        if (parseInt(x.innerHTML.toLowerCase(), 10) > parseInt(y.innerHTML.toLowerCase(), 10)) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
+  }
+
 function populateMoves(pokemonData) {
     let moveData = {};
     let moveUrls = [];
@@ -298,6 +322,8 @@ function populateMoves(pokemonData) {
             </tr>`
             );
         }
+
+        sortTable();
     });
 }
 
