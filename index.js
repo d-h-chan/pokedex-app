@@ -124,7 +124,7 @@ function getFullHeightData(height) {
 function getFullWeightData(weight) {
      let weightKg = weight/10;
      let weightPounds = weightKg * 2.205;
-     return `${weightKg}lbs (${weightPounds.toFixed(1)}kg)`;
+     return `${weightPounds.toFixed(1)}lbs (${weightKg.toFixed(1)}kg)`;
  }
 
 //name, height, weight, cry, type, abilities, dex number (id)
@@ -402,7 +402,7 @@ function watchForm() {
     $('#js-evolution-chain').on('click', 'li button', function(event) {
         loadPage($(this).find(".caption").text());
     });
-    
+
     loadPage(25);
 }
 
