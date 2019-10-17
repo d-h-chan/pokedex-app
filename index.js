@@ -33,7 +33,7 @@ function getPokeIdFromPokemonUrl(url) {
 }
 
 function getTypeImage(type) {
-    return `../assets/Icon_${type}.png`;
+    return `./assets/Icon_${type}.png`;
 }
 
 function populateMainImage(pokemonData) {
