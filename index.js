@@ -33,51 +33,7 @@ function getPokeIdFromPokemonUrl(url) {
 }
 
 function getTypeImage(type) {
-    console.log(`assets/Icon_${type}.png`);
     return `assets/Icon_${type}.png`;
-}
-
-function getTypeColor(type) {
-    switch (type.toLowerCase) {
-        case "bug": 
-            return "#A0C331";
-        case "dark": 
-            return "#6A697B";
-        case "dragon": 
-            return "#0373BF";
-        case "electric": 
-            return "#FDDC51";
-        case "fairy": 
-            return "#F199E3";
-        case "fighting": 
-            return "#D4445B";
-        case "fire": 
-            return "#FFA34B";
-        case "flying": 
-            return "#A4B9E6";
-        case "ghost": 
-            return "#6870C3";
-        case "grass": 
-            return "#5BC064";
-        case "ground": 
-            return "#D48856";
-        case "ice": 
-            return "#83CFC5";
-        case "normal": 
-            return "#9D9EA0";
-        case "poison": 
-            return "#B263D6";
-        case "psychic": 
-            return "#F8858A";
-        case "rock": 
-            return "#CEC195";
-        case "steel": 
-            return "#4F9FA8";
-        case "water": 
-            return "#66AFD8";
-        default: 
-            break;
-    }
 }
 
 function populateMainImage(pokemonData) {
@@ -191,16 +147,9 @@ $.fn.exists = function () {
 function appendFormImage(pokemonName, pokemonId) {
     let apiUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
     //let spriteUrl = aniSpriteUrl + pokemonName + ".png";
-    console.log(apiUrl);
     $.get(apiUrl)
     .done(function() { 
-        // Do something now you know the image exists.
-        let element = $("ul").find(`[data-pokemon-name='${pokemonName}']`);
-        if (!element.exists() && !pokemonName.includes("totem")) {
-            $("#js-pokemon-forms").append(
-                `<li data-pokemon-name="${pokemonName}"><img src="${apiUrl}" alt=""></li>`
-            );
-        } 
+        appendFormImageUrl(pokemonName, apiUrl);
     }) 
 }
 
@@ -212,7 +161,12 @@ function appendFormImageUrl(pokemonName, apiUrl) {
         let element = $("ul").find(`[data-pokemon-name='${pokemonName}']`);
         if (!element.exists() && !pokemonName.includes("totem")) {
             $("#js-pokemon-forms").append(
-                `<li data-pokemon-name="${pokemonName}"><img src="${apiUrl}" alt=""></li>`
+                `<li data-pokemon-name="${pokemonName}">
+                    <figure>
+                        <img class ="small-pokemon-image" src="${apiUrl}"/>
+                    <figcaption class="caption">${pokemonName}</figcaption>
+                    </figure>                
+                </li>`
             );
         }
     })
@@ -325,10 +279,23 @@ function populateMoves(pokemonData) {
             return responses;
     }).then(responses => Promise.all(responses.map(r => r.json())))
     .then(responseJsons => {
-        $("#js-level-up-moves").empty();
+        $("#js-move-table-body tr").remove();
         for (const responseJson of responseJsons) {
-            $("#js-level-up-moves").append(
-            `<li>${responseJson.name} ${responseJson.type.name} ${moveData[responseJson.name]}</li>`
+            let moveNameEn = "";
+            for (const name of responseJson.names) {
+                if (name.language.name === "en") {
+                    moveNameEn = name.name;
+                    break;
+                }
+            }
+            $("#js-move-table-body").append(
+            `<tr>
+                <td>${moveData[responseJson.name]}</td>
+                <td>
+                    <img class="pokemon-type-table" src="${getTypeImage(responseJson.type.name)}">
+                </td>
+                <td class="left-align left-padding">${moveNameEn}</td>
+            </tr>`
             );
         }
     });
@@ -362,7 +329,6 @@ function populatePokemonForms(pokemonSpeciesData) {
                 .then(responses => Promise.all(responses.map(r => r.json())))
                 .then(formData => {
                     for (const item of formData) {
-                        console.log(formData);
                         if (item.sprites.front_default !== null) {
                             appendFormImageUrl(item.name,item.sprites.front_default);
                         }
@@ -372,6 +338,7 @@ function populatePokemonForms(pokemonSpeciesData) {
 }
 
 function loadPage(pokemonName) {  
+    $("#js-pokemon-search").val("");
     callApi(generatePokemonUrl(pokemonName))
         .then(function(pokemonData) {
             populateMainImage(pokemonData);
@@ -403,7 +370,11 @@ function watchForm() {
         loadPage($(this).find(".caption").text());
     });
 
-    loadPage(25);
+    $('#cry-play-button').on('click', function(event){
+        $('#js-pokemon-cry-mp3')[0].play();
+    });
+
+    loadPage(1);
 }
 
 $(watchForm());

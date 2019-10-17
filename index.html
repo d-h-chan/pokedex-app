@@ -38,7 +38,7 @@
             <p>Height: <span id="js-pokemon-height"></span></p>
             <p>Weight: <span id="js-pokemon-weight"></span></p>
             <p>Cry: <audio src="" id="js-pokemon-cry-mp3"></audio>
-                <button id="cry-play-button" onclick="document.getElementById('js-pokemon-cry-mp3').play()">
+                <button id="cry-play-button">
                 <i class="fa fa-play"></i></button> </p>
         </section>
 
@@ -115,9 +115,25 @@
 
         <section role="contentinfo" aria-label="Moves">
             <h3>Level-up moves</h3>
-            <ul id="js-level-up-moves">
-
-            </ul>
+            <table id="js-level-up-moves">
+                <thead>
+                    <tr>
+                        <th>
+                            Level
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            Move
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="js-move-table-body">
+                    
+                </tbody>
+            </table>
+            
         </section>
 
         <section role="contentinfo" aria-label="Forms">

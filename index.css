@@ -46,13 +46,10 @@ section {
     position: relative;
 }
 
-
 form button {
     height: 25px;
     width: 25px;
 }
-
-
 
 
 ul {
@@ -102,6 +99,10 @@ table {
 
 .left-align {
     text-align: left;
+}
+
+.left-padding {
+    padding-left: 12%;
 }
 
 .bold {
@@ -175,6 +176,13 @@ input {
     margin-bottom: 0px;
 }
 
+.pokemon-type-table {
+    width: 15px;
+    margin: 0;
+    margin-bottom: 3px;
+    vertical-align: middle;
+}
+
 figure{
     vertical-align: top;
     display: inline-block;
@@ -190,6 +198,7 @@ figure{
 .caption {
     display: block;
     text-transform: capitalize;
+    font-size: 13px;
 }
 
 #cry-play-button{
