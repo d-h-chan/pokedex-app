@@ -4,14 +4,57 @@ const url="https://pokeapi.co/api/v2/";
 const aniSpriteUrl="https://play.pokemonshowdown.com/sprites/ani/";
 const aniCryUrl="https://play.pokemonshowdown.com/audio/cries/";
 
-const POKEMON_NAMES = [];
+const POKEMON_NAMES_CONVERSION = {
+    "nidoran": "nidoran-m",
+    "nidoranm": "nidoran-m",
+    "nidoranf": "nidoran-f",
+    "mr.mime": "mr-mime",
+    "mrmime": "mr-mime",
+    "hooh": "ho-oh",
+    "deoxys": "deoxys-normal",
+    "wormadam": "wormadam-plant",
+    "mime.jr": "mime-jr",
+    "mimejr": "mime-jr",
+    "mimejr.": "mime-jr",
+    "porygon-2": "poyrgon2",
+    "porygonz": "poyrgon-z",
+    "giratina": "giratina-altered",
+    "shaymin": "shaymin-land",
+    "basculin": "basculin-red-striped",
+    "darmanitan": "darmanitan-standard",
+    "tornadus": "tornadus-incarnate",
+    "thundurus": "thundurus-incarnate",
+    "landorus": "landorus-incarnate",
+    "keldeo": "keldeo-ordinary",
+    "meloetta": "meloetta-aria",
+    "meowstic": "meowstic-male",
+    "aegislash": "aegislash-shield",
+    "pumpkaboo": "pumpkaboo-average",
+    "gourgeist": "gourgeist-average",
+    "oricorio": "oricorio-baile",
+    "lycanroc": "lycanroc-midday",
+    "wishiwashi": "wishiwashi-solo",
+    "typenull": "type-null",
+    "minior": "minior-red-meteor",
+    "mimikyu": "mimikyu-disguised",
+    "jangmoo": "jangmo-o",
+    "hakamoo": "hakamo-o",
+    "kommoo": "kommo-o",
+    "tapukoko": "tapu-koko",
+    "tapulele": "tapu-lele",
+    "tapubulu": "tapu-bulu",
+    "tapufini": "tapu-fini",
+};
 
 async function callApi(url) {
     try {
         let response = await fetch(url);
-        return await response.json();
+        if (response.ok) {
+            return await response.json();
+        }
     } catch(err){
         console.error(err);
+        //alert("hey");
     }
 }
 
@@ -386,10 +429,35 @@ function populateLeftRightButtons(pokemonData) {
     $('#js-right-button').prop("disabled", false);
 }
 
-function loadPage(pokemonName) {  
+//POKEMON WITH FORMS (deoxys-normal, thundurus-incarnate, etc): user should be able to enter name without form and get results
+//POKEMON WITH NATURAL HYPHENS (ho-oh, mr-mime), the GIFS need the hyphen removed. Check nidoran
+
+function validateSearch(pokemonName) {
+    
+    let pokemonNameValidated = pokemonName;
+    if (!isNaN(pokemonName)) {
+        if (pokemonName > 807) {
+            pokemonNameValidated = 807;
+        }
+        if (pokemonName < 1) {
+            pokemonNameValidated = 1;
+        }
+    }
+    else {
+        pokemonNameValidated = pokemonName.toLowerCase().trim().replace(/\s/g, "");
+        if (pokemonNameValidated in POKEMON_NAMES_CONVERSION) {
+            pokemonNameValidated = POKEMON_NAMES_CONVERSION[pokemonNameValidated];
+        }
+    };
+    return pokemonNameValidated;
+}
+
+function loadPage(pokemonNameUnvalidated) { 
+    let pokemonName = validateSearch(pokemonNameUnvalidated);
     $("#js-pokemon-search").val("");
     $('#js-left-button').prop("disabled", true);
     $('#js-right-button').prop("disabled", true);
+
     callApi(generatePokemonUrl(pokemonName))
         .then(function(pokemonData) {
             populateMainImage(pokemonData);
@@ -411,15 +479,12 @@ function loadPage(pokemonName) {
         });
 }
 
+
 function initialize() {
 
     //https://pokeapi.co/api/v2/pokemon/?limit=807
     callApi("https://pokeapi.co/api/v2/pokemon/?limit=807")
         .then(function(response) {
-            for (const pokemon of response.results) {
-                POKEMON_NAMES.push(pokemon.name);
-            }
-            console.log(POKEMON_NAMES);
 
             $('form').submit(event => {
                 event.preventDefault();
@@ -453,7 +518,7 @@ function initialize() {
         
             $('#js-pokemon-cry-mp3')[0].volume = 0.5;
         
-            loadPage(1);
+            loadPage("bulbasaur");
         }
     );  
 }
