@@ -37,10 +37,6 @@ img {
     margin: 5px;
 }
 
-button:hover {
-    cursor: pointer;
-}
-
 section {
     margin: 10px;
     padding: 20px;    
@@ -50,16 +46,13 @@ section {
     position: relative;
 }
 
-input {
-    height: 25px;
-    font-size: 16px;
-}
 
 form button {
     height: 25px;
     width: 25px;
-    font-size: 15px;
 }
+
+
 
 
 ul {
@@ -115,13 +108,105 @@ table {
     font-weight: bold;
 }
 
-.dot {
-    height: 8px;
-    width: 8px;
-    background-color: #5BC064;
-    border-radius: 50%;
-    display: inline-block;
+#search-bar-section {
+    padding: 0;
+    height: 40px;
+}
+
+
+input, button {
+     border:none;  
+}
+
+form {
+    margin: 0;
     position: absolute;
-    top: 15px;
-    left: 15px;
-  }
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.fa {
+    line-height: inherit;
+    color: gray
+}
+
+.fa-search {
+    font-size: 18px;
+}
+
+.search-button {
+    height: 35px;
+    width: 40px;
+    vertical-align: center;
+}
+
+input {
+    height: 30px;
+    width: 60%;
+    font-size: 16px;
+}
+
+.float-button {
+    margin: 0;
+    font-size: 25px;
+    width: 40px;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+
+}
+
+.float-button-left {
+    left: 30px;
+}
+
+.float-button-right {
+    right: -10px;
+}
+
+.pokemon-type {
+    width: 20px;
+    margin: 0 5px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+figure{
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    margin: 0;
+}
+
+.small-pokemon-image {
+    vertical-align: bottom;
+    margin: 0;
+}
+
+.caption {
+    display: block;
+    text-transform: capitalize;
+}
+
+#cry-play-button{
+    height: 25px;
+    width: 50px;
+    font-size: 14px;
+    margin: 0 10px;
+    border: 2px solid #E8E8E8;
+}
+
+button {
+    border-radius: 10px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;}
+
+
+button:hover {
+    cursor: pointer;
+    background-color: #E8E8E8;
+}

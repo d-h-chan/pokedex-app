@@ -14,25 +14,32 @@
             <h2 id="js-pokemon-name"></h2>
             <h4 id="js-pokemon-genus"></h4>
             <img id="js-pokemon-image" src="" alt="">
-            <p>
-                <span id="js-pokemon-type-1"></span>
-                <span id="js-pokemon-type-2"></span>
-            </p>
+            <br>
+            
+            <img id="js-pokemon-type-1" class="pokemon-type" src="" alt="">
+            <img id="js-pokemon-type-2" class="pokemon-type" src="" alt="">
+            
+            </div>
+
             <p class="hidden">abilities: <span id="js-pokemon-abilities"></span></p>
         </section>
 
-        <section role="contentinfo" aria-label="Search Bar">
+        <section id="search-bar-section" role="contentinfo" aria-label="Search Bar">
             <form >
-                <input type="text" placeholder="Search.." name="search" id="js-pokemon-search">
-                <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
+                <input type="text" placeholder="Search.." name="search" id="js-pokemon-search" required>
+                <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+            <button class = "float-button float-button-left"><i class="fa fa-angle-double-left"></i> </button>
+            <button class = "float-button float-button-right"><i class="fa fa-angle-double-right"></i> </button>
+
         </section>
                 
         <section role="contentinfo" aria-label="Pokemon Physical Data">
-            <p>height: <span id="js-pokemon-height"></span></p>
-            <p>weight: <span id="js-pokemon-weight"></span></p>
-            <p>cry: <audio src="" id="js-pokemon-cry-mp3">
-            </audio></p>
+            <p>Height: <span id="js-pokemon-height"></span></p>
+            <p>Weight: <span id="js-pokemon-weight"></span></p>
+            <p>Cry: <audio src="" id="js-pokemon-cry-mp3"></audio>
+                <button id="cry-play-button" onclick="document.getElementById('js-pokemon-cry-mp3').play()">
+                <i class="fa fa-play"></i></button> </p>
         </section>
 
         <section role="contentinfo" aria-label="Pokedex Entry">

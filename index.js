@@ -32,6 +32,11 @@ function getPokeIdFromPokemonUrl(url) {
     return res[1].replace("/", "");
 }
 
+function getTypeImage(type) {
+    console.log(`assets/Icon_${type}.png`);
+    return `assets/Icon_${type}.png`;
+}
+
 function getTypeColor(type) {
     switch (type.toLowerCase) {
         case "bug": 
@@ -106,13 +111,30 @@ function populatePokemonSpeciesBasicData(pokemonSpeciesData) {
     }
 }
 
+function getFullHeightData(height) {
+    let heightMeters=height/10;
+    let heightFeet = heightMeters * 3.281;
+    let heightInches = ((heightFeet%1) * 12).toFixed(0);
+    if (heightInches == 12) {
+        heightInches = 0;
+    }
+    return `${heightFeet.toFixed(0)}'${heightInches}" (${heightMeters}m)`;
+}
+
+function getFullWeightData(weight) {
+     let weightKg = weight/10;
+     let weightPounds = weightKg * 2.205;
+     return `${weightKg}lbs (${weightPounds.toFixed(1)}kg)`;
+ }
+
 //name, height, weight, cry, type, abilities, dex number (id)
 function populatePokemonBasicData(pokemonData) {
     $("#js-pokemon-name").text(pokemonData.name);
-    $("#js-pokemon-weight").text(pokemonData.weight);
-    $("#js-pokemon-height").text(pokemonData.height);
+    $("#js-pokemon-weight").text(getFullWeightData(pokemonData.weight));
+    $("#js-pokemon-height").text(getFullHeightData(pokemonData.height));
     populateCry(pokemonData);
 }
+
 
 function populatePokemonAttributeData(pokemonData) {
     let type1 = "";
@@ -120,13 +142,13 @@ function populatePokemonAttributeData(pokemonData) {
     if (pokemonData.types.length > 1) {
         type1 = pokemonData.types[1].type.name;
         type2 = pokemonData.types[0].type.name;
-        $("#js-pokemon-type-1").text(type1);
-        $("#js-pokemon-type-2").text(type2);
+        $("#js-pokemon-type-1").attr("src",getTypeImage(type1));
+        $("#js-pokemon-type-2").attr("src",getTypeImage(type2));
         $("#js-pokemon-type-2").show();
     }
     else {
         type1 =pokemonData.types[0].type.name;
-        $("#js-pokemon-type-1").text(type1);
+        $("#js-pokemon-type-1").attr("src",getTypeImage(type1));
         $("#js-pokemon-type-2").hide();
     }
 
@@ -145,8 +167,16 @@ function appendEvolutionImage(pokemonName, pokemonId) {
     //let spriteUrl = aniSpriteUrl + pokemonName + ".png";
 
     $("#js-evolution-chain").append(
-        `<li data-pokemon-name="${pokemonName}"><img src="${apiUrl}" alt=""></li>`
+        `<li data-pokemon-name="${pokemonName}">
+            <button>
+                <figure>
+                    <img class ="small-pokemon-image" src="${apiUrl}"/>
+                    <figcaption class="caption">${pokemonName}</figcaption>
+                </figure>
+            </button>
+        </li>`
     );
+
     /*$("#js-evolution-chain").find(`[data-pokemon-id='${pokemonId}'] img`)
         .on("error", function() {
             $(this).attr("src", apiUrl);
@@ -356,7 +386,9 @@ function loadPage(pokemonName) {
             populatePokemonSpeciesBasicData(pokemonSpeciesData);
             populateEvolutionChain(pokemonSpeciesData);
             populatePokemonForms(pokemonSpeciesData);
+            //disable current form's button
             console.log(pokemonSpeciesData);
+            return pokemonSpeciesData;
         });
 }
 
@@ -366,7 +398,13 @@ function watchForm() {
         const searchTerm = $('#js-pokemon-search').val();
         loadPage(searchTerm);
     });
+
+    $('#js-evolution-chain').on('click', 'li button', function(event) {
+        loadPage($(this).find(".caption").text());
+    });
+    
+    loadPage(25);
 }
 
-loadPage(1);
 $(watchForm());
+
