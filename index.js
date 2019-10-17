@@ -4,20 +4,31 @@ const url="https://pokeapi.co/api/v2/";
 const aniSpriteUrl="https://play.pokemonshowdown.com/sprites/ani/";
 const aniCryUrl="https://play.pokemonshowdown.com/audio/cries/";
 
-const POKEMON_NAMES_CONVERSION = {
+const POKEMON_NAMES_CONVERSION_SPELLING = {
     "nidoran": "nidoran-m",
     "nidoranm": "nidoran-m",
     "nidoranf": "nidoran-f",
     "mr.mime": "mr-mime",
     "mrmime": "mr-mime",
     "hooh": "ho-oh",
-    "deoxys": "deoxys-normal",
-    "wormadam": "wormadam-plant",
     "mime.jr": "mime-jr",
     "mimejr": "mime-jr",
     "mimejr.": "mime-jr",
+    "mime-jr.": "mime-jr",
     "porygon-2": "poyrgon2",
     "porygonz": "poyrgon-z",
+    "jangmoo": "jangmo-o",
+    "hakamoo": "hakamo-o",
+    "kommoo": "kommo-o",
+    "tapukoko": "tapu-koko",
+    "tapulele": "tapu-lele",
+    "tapubulu": "tapu-bulu",
+    "tapufini": "tapu-fini",
+}
+
+const POKEMON_NAMES_CONVERSION_FORMS = {
+    "deoxys": "deoxys-normal",
+    "wormadam": "wormadam-plant",
     "giratina": "giratina-altered",
     "shaymin": "shaymin-land",
     "basculin": "basculin-red-striped",
@@ -37,13 +48,6 @@ const POKEMON_NAMES_CONVERSION = {
     "typenull": "type-null",
     "minior": "minior-red-meteor",
     "mimikyu": "mimikyu-disguised",
-    "jangmoo": "jangmo-o",
-    "hakamoo": "hakamo-o",
-    "kommoo": "kommo-o",
-    "tapukoko": "tapu-koko",
-    "tapulele": "tapu-lele",
-    "tapubulu": "tapu-bulu",
-    "tapufini": "tapu-fini",
 };
 
 async function callApi(url) {
@@ -84,7 +88,7 @@ function getTypeImage(type) {
 
 function populateMainImage(pokemonData) {
     $("#js-pokemon-image")
-        .attr("src", aniSpriteUrl + pokemonData.species.name + ".gif")
+        .attr("src", aniSpriteUrl + removeHyphensForShowdown(pokemonData.species.name) + ".gif")
         .on("error", function() {
             $(this).attr("src", pokemonData.sprites.front_default);;
         });
@@ -92,7 +96,7 @@ function populateMainImage(pokemonData) {
 
 function populateCry(pokemonData) {    
     $("#js-pokemon-cry-mp3")
-        .attr("src", aniCryUrl + pokemonData.species.name + ".mp3");
+        .attr("src", aniCryUrl + removeHyphensForShowdown(pokemonData.species.name) + ".mp3");
 }
 
 //genus, flavor text
@@ -128,6 +132,10 @@ function getFullWeightData(weight) {
      let weightKg = weight/10;
      let weightPounds = weightKg * 2.205;
      return `${weightPounds.toFixed(1)}lbs (${weightKg.toFixed(1)}kg)`;
+ }
+
+ function removeHyphensForShowdown(string) {
+    return string.replace(/-/g,"");
  }
 
 //name, height, weight, cry, type, abilities, dex number (id)
@@ -445,20 +453,25 @@ function validateSearch(pokemonName) {
     }
     else {
         pokemonNameValidated = pokemonName.toLowerCase().trim().replace(/\s/g, "");
-        if (pokemonNameValidated in POKEMON_NAMES_CONVERSION) {
-            pokemonNameValidated = POKEMON_NAMES_CONVERSION[pokemonNameValidated];
-        }
     };
     return pokemonNameValidated;
 }
 
-function loadPage(pokemonNameUnvalidated) { 
-    let pokemonName = validateSearch(pokemonNameUnvalidated);
+function loadPage(pokemonName) { 
+    pokemonName = validateSearch(pokemonName);
+    if (pokemonName in POKEMON_NAMES_CONVERSION_SPELLING) {
+        pokemonName = POKEMON_NAMES_CONVERSION_SPELLING[pokemonName];
+    }
+    let pokemonFormName = pokemonName;
+    if (pokemonName in POKEMON_NAMES_CONVERSION_FORMS){
+     pokemonFormName = POKEMON_NAMES_CONVERSION_FORMS[pokemonName];
+    }
+    console.log(pokemonName);
     $("#js-pokemon-search").val("");
     $('#js-left-button').prop("disabled", true);
     $('#js-right-button').prop("disabled", true);
 
-    callApi(generatePokemonUrl(pokemonName))
+    callApi(generatePokemonUrl (pokemonFormName))
         .then(function(pokemonData) {
             populateMainImage(pokemonData);
             populatePokemonBasicData(pokemonData);
