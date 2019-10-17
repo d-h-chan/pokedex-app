@@ -33,7 +33,9 @@ function getPokeIdFromPokemonUrl(url) {
 }
 
 function getTypeImage(type) {
-    return `./assets/Icon_${type}.png`;
+    const typeCaps = type.charAt(0).toUpperCase() + type.slice(1)
+    console.log(`/assets/Icon_${typeCaps}.png`);
+    return `/assets/Icon_${typeCaps}.png`;
 }
 
 function populateMainImage(pokemonData) {
