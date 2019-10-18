@@ -19,124 +19,123 @@
             <img id="js-pokemon-type-2" class="pokemon-type" src="" alt="">
             
             </div>
-
-            <p class="hidden">abilities: <span id="js-pokemon-abilities"></span></p>
         </section>
 
         <section id="js-search-bar-section" role="contentinfo" aria-label="Search Bar">
             <form autocomplete="off">
-                <div class="autocomplete">
-                    <button id="js-random-button" type="button"><i class="fa fa-dice"></i></button>
-                    <input type="text" placeholder="Search.." name="search" id="js-pokemon-search" required>
-                    <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
-                </div>
+                <button id="js-random-button" type="button"><i class="fa fa-dice"></i></button>
+                <input type="text" placeholder="Search.." name="search" id="js-pokemon-search" required>
+                <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
             </form>
             <button id="js-left-button" data-pokemon-id="" class="float-button float-button-left"><i class="fa fa-angle-double-left"></i> </button>
             <button id="js-right-button" data-pokemon-id="" class="float-button float-button-right"><i class="fa fa-angle-double-right"></i> </button>
 
         </section>
-                
-        <section role="contentinfo" aria-label="Pokemon Physical Data">
-            <p>Height: <span id="js-pokemon-height"></span></p>
-            <p>Weight: <span id="js-pokemon-weight"></span></p>
-            <p>Cry: <audio src="" id="js-pokemon-cry-mp3"></audio>
-                <button id="js-play-button">
-                <i class="fa fa-play"></i></button> </p>
-        </section>
+        <div class="flex flex-clockwise">
+            <section id="js-attributes-section" role="contentinfo" aria-label="Pokemon Physical Data">
+                <p>Abilities: <span id="js-pokemon-abilities"></span></p>
+                <p>Height: <span id="js-pokemon-height"></span></p>
+                <p>Weight: <span id="js-pokemon-weight"></span></p>
+                <p>Cry: <audio src="" id="js-pokemon-cry-mp3"></audio>
+                    <button id="js-play-button">
+                    <i class="fa fa-play"></i></button>
+                </p>
+            </section>
 
-        <section role="contentinfo" aria-label="Pokedex Entry">
-            <h3>pokedéx entry</h3>
-            <p id="js-pokedex-entry" class="left-align"></p>
-        </section>
-
+            <section id="js-pokedex-section" role="contentinfo" aria-label="Pokedex Entry">
+                <h3>pokedéx entry</h3>
+                <p id="js-pokedex-entry" class="left-align"></p>
+            </section>
+        </div>
         <section role="contentinfo" aria-label="evolution chain">
             <h3>Evolution Line</h3>
             <ul id="js-evolution-chain">
             </ul>
         </section>
 
-        <section role="contentinfo" aria-label="stats">
-            <h3>Stats</h3>
-            <table>
-                    <tr>
-                        <td class="stat-name">
-                            <span class="stat-label">HP:</span><span id="js-hp-value" class="stat-value bold"></span>
-                        </td>
-                        <td class="stat-display">
-                            <div id="js-hp-display" class="stat-bar"> </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="stat-name">
-                            <span class="stat-label">Attack:</span>
-                            <span id="js-attack-value" class="stat-value bold"></span>
-                        </td>
-                        <td class="stat-display">
-                            <div id="js-attack-display" class="stat-bar"> </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="stat-name">
-                            <span class="stat-label">Defense:</span>
-                            <span id="js-defense-value" class="stat-value bold"></span>
-                        </td>
-                        <td class="stat-display">
-                            <div id="js-defense-display" class="stat-bar"> </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="stat-name">
-                            <span class="stat-label">Sp. Atk:</span>
-                            <span id="js-special-attack-value" class="stat-value bold"></span>
-                        </td>
-                        <td class="stat-display">
-                            <div id="js-special-attack-display" class="stat-bar"> </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="stat-name">
-                            <span class="stat-label">Sp. Def:</span>
-                            <span id="js-special-defense-value" class="stat-value bold"></span>
-                        </td>
-                        <td class="stat-display">
-                            <div id="js-special-defense-display" class="stat-bar"> </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="stat-name">
-                            <span class="stat-label">Speed:</span>
-                            <span id="js-speed-value" class="stat-value bold"></span>
-                        </td>
-                        <td class="stat-display">
-                            <div id="js-speed-display" class="stat-bar"> </div>
-                        </td>
-                    </tr>
-                </table>
-            
-        </section>
+        <div class="flex flex-counterclockwise">
+            <section id = "js-stats-section" role="contentinfo" aria-label="stats">
+                <h3>Stats</h3>
+                <table>
+                        <tr>
+                            <td class="stat-name">
+                                <span class="stat-label">HP:</span><span id="js-hp-value" class="stat-value bold"></span>
+                            </td>
+                            <td class="stat-display">
+                                <div id="js-hp-display" class="stat-bar"> </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="stat-name">
+                                <span class="stat-label">Attack:</span>
+                                <span id="js-attack-value" class="stat-value bold"></span>
+                            </td>
+                            <td class="stat-display">
+                                <div id="js-attack-display" class="stat-bar"> </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="stat-name">
+                                <span class="stat-label">Defense:</span>
+                                <span id="js-defense-value" class="stat-value bold"></span>
+                            </td>
+                            <td class="stat-display">
+                                <div id="js-defense-display" class="stat-bar"> </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="stat-name">
+                                <span class="stat-label">Sp. Atk:</span>
+                                <span id="js-special-attack-value" class="stat-value bold"></span>
+                            </td>
+                            <td class="stat-display">
+                                <div id="js-special-attack-display" class="stat-bar"> </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="stat-name">
+                                <span class="stat-label">Sp. Def:</span>
+                                <span id="js-special-defense-value" class="stat-value bold"></span>
+                            </td>
+                            <td class="stat-display">
+                                <div id="js-special-defense-display" class="stat-bar"> </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="stat-name">
+                                <span class="stat-label">Speed:</span>
+                                <span id="js-speed-value" class="stat-value bold"></span>
+                            </td>
+                            <td class="stat-display">
+                                <div id="js-speed-display" class="stat-bar"> </div>
+                            </td>
+                        </tr>
+                    </table>
+                
+            </section>
 
-        <section role="contentinfo" aria-label="Moves">
-            <h3>Level-up moves</h3>
-            <table id="js-level-up-moves">
-                <thead>
-                    <tr>
-                        <th>
-                            Level
-                        </th>
-                        <th>
-                            Type
-                        </th>
-                        <th>
-                            Move
-                        </th>
-                    </tr>
-                </thead>
-                <tbody id="js-move-table-body">
-                    
-                </tbody>
-            </table>
-            
-        </section>
+            <section id="js-moves-section"role="contentinfo" aria-label="Moves">
+                <h3>Level-up moves</h3>
+                <table id="js-level-up-moves">
+                    <thead>
+                        <tr>
+                            <th>
+                                Level
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                Move
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="js-move-table-body">
+                        
+                    </tbody>
+                </table>
+            </section>
+        </div>
 
         <section role="contentinfo" aria-label="Forms">
             <h3>Alternate Forms</h3>

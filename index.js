@@ -155,6 +155,17 @@ function getRandomPokemonNumber() {
     return random;
 }
 
+function parseAbility(str) {
+    console.log(str);
+    let words = str.split('-');
+    let output = "";
+    for (let i = 0; i < words.length; i++) {
+    
+        output += words[i].charAt(0).toUpperCase() + words[i].slice(1);
+        output += " "
+    }
+    return output.substring(0, output.length - 1);
+}
 
 function populatePokemonAttributeData(pokemonData) {
     let type1 = "";
@@ -172,14 +183,16 @@ function populatePokemonAttributeData(pokemonData) {
         $("#js-pokemon-type-2").hide();
     }
 
-    /*
     let abilities = "";
-    for (let i = 0; i < pokemonData.abilities.length; i++) {
-        abilities += pokemonData.abilities[i].ability.name;
-        abilities += " "
+    abilities += parseAbility(pokemonData.abilities[0].ability.name);
+    for (let i = 1; i < pokemonData.abilities.length; i++) {
+        abilities += ", "
+        abilities += parseAbility(pokemonData.abilities[i].ability.name);
     }
-    $("#js-pokemon-abilities").text(abilities);*/
+    $("#js-pokemon-abilities").text(abilities);
 }
+
+
 
 
 function appendEvolutionImage(pokemonName, pokemonId) {
@@ -466,7 +479,6 @@ function loadPage(pokemonName) {
     if (pokemonName in POKEMON_NAMES_CONVERSION_FORMS){
      pokemonFormName = POKEMON_NAMES_CONVERSION_FORMS[pokemonName];
     }
-    console.log(pokemonName);
     $("#js-pokemon-search").val("");
     $('#js-left-button').prop("disabled", true);
     $('#js-right-button').prop("disabled", true);

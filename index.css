@@ -9,8 +9,15 @@ body {
     background-color:#F8F8F8;
 }
 
+div {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
 main {
-    max-width: 700px;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -108,7 +115,6 @@ table {
     padding: 0;
     height: 40px;
 }
-
 
 input, button {
      border:none;  
@@ -218,3 +224,46 @@ button:hover {
 .button-disabled{
     pointer-events: none;
 }
+
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+    width: 100%;
+}
+
+.flex-clockwise{
+    flex-direction: column;
+}
+
+.flex-counterclockwise{
+    flex-direction: column;
+}
+
+@media screen and (min-width: 600px) {
+
+    .flex-clockwise{
+        flex-direction: row-reverse;
+    }
+
+    .flex-counterclockwise{
+        flex-direction: row;
+    }
+
+    #js-pokedex-section{
+        width: 50%;
+    }
+
+    #js-attributes-section{
+        width: 50%;
+    }
+
+    #js-stats-section{
+        width: 50%;
+    }
+    #js-moves-section{
+        width: 50%;
+    }
+  }
