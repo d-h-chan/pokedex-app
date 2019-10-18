@@ -455,6 +455,27 @@ function validateSearch(pokemonName) {
     return pokemonNameValidated;
 }
 
+function loadModal() {
+    // Get the modal
+    let modal = document.getElementById("myModal");
+
+    // Get the <span> element that closes the modal
+    let span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        console.log("click");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
+
 function loadPage(pokemonName) { 
     pokemonName = validateSearch(pokemonName);
     if (pokemonName in POKEMON_NAMES_CONVERSION_SPELLING) {
@@ -492,6 +513,8 @@ function initialize() {
     callApi("https://pokeapi.co/api/v2/pokemon/?limit=807")
         .then(function(response) {
 
+            loadModal();
+
             $('form').submit(event => {
                 event.preventDefault();
                 const searchTerm = $('#js-pokemon-search').val();
@@ -525,6 +548,7 @@ function initialize() {
             $('#js-pokemon-cry-mp3')[0].volume = 0.5;
         
             loadPage("bulbasaur");
+
         }
     );  
 }
