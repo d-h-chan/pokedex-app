@@ -58,7 +58,6 @@ async function callApi(url) {
         }
     } catch(err){
         console.error(err);
-        //alert("hey");
     }
 }
 
@@ -82,7 +81,6 @@ function getPokeIdFromPokemonUrl(url) {
 
 function getTypeImage(type) {
     const typeCaps = type.charAt(0).toUpperCase() + type.slice(1)
-    //console.log(`./assets/Icon_${typeCaps}.png`);
     return `./assets/Icon_${typeCaps}.png`;
 }
 
@@ -151,12 +149,10 @@ function getRandomPokemonNumber() {
     let max=807;  
     let random = 
     Math.floor(Math.random() * (+max - +min)) + +min;
-    console.log(random);
     return random;
 }
 
 function parseAbility(str) {
-    console.log(str);
     let words = str.split('-');
     let output = "";
     for (let i = 0; i < words.length; i++) {
@@ -209,12 +205,6 @@ function appendEvolutionImage(pokemonName, pokemonId) {
             </button>
         </li>`
     );
-
-    /*$("#js-evolution-chain").find(`[data-pokemon-id='${pokemonId}'] img`)
-        .on("error", function() {
-            $(this).attr("src", apiUrl);
-        }
-    );*/
 }
 
 $.fn.exists = function () {
@@ -253,9 +243,7 @@ function populateEvolutionChain(pokemonSpeciesData) {
     callApi(pokemonSpeciesData.evolution_chain.url)
         .then (function(pokemonEvolutionData) {
             $("#js-evolution-chain").empty();
-            //first form data. .url for species
             appendEvolutionImage(pokemonEvolutionData.chain.species.name, getPokeIdFromSpeciesUrl(pokemonEvolutionData.chain.species.url));
-            //loop through
             for (let i = 0; i < pokemonEvolutionData.chain.evolves_to.length; i++) {
                 let stage2 = pokemonEvolutionData.chain.evolves_to[i];
                 appendEvolutionImage(stage2.species.name, getPokeIdFromSpeciesUrl(stage2.species.url));
@@ -450,9 +438,6 @@ function populateLeftRightButtons(pokemonData) {
     $('#js-right-button').prop("disabled", false);
 }
 
-//POKEMON WITH FORMS (deoxys-normal, thundurus-incarnate, etc): user should be able to enter name without form and get results
-//POKEMON WITH NATURAL HYPHENS (ho-oh, mr-mime), the GIFS need the hyphen removed. Check nidoran
-
 function validateSearch(pokemonName) {
     
     let pokemonNameValidated = pokemonName;
@@ -491,15 +476,12 @@ function loadPage(pokemonName) {
             populatePokemonAttributeData(pokemonData);
             populatePokemonStats(pokemonData);
             populateMoves(pokemonData);
-            console.log(pokemonData);
         });
     callApi(generatePokemonSpeciesUrl(pokemonName))
         .then(function(pokemonSpeciesData) {
             populatePokemonSpeciesBasicData(pokemonSpeciesData);
             populateEvolutionChain(pokemonSpeciesData);
             populatePokemonForms(pokemonSpeciesData);
-            //disable current form's button
-            console.log(pokemonSpeciesData);
             return pokemonSpeciesData;
         });
 }
@@ -507,7 +489,6 @@ function loadPage(pokemonName) {
 
 function initialize() {
 
-    //https://pokeapi.co/api/v2/pokemon/?limit=807
     callApi("https://pokeapi.co/api/v2/pokemon/?limit=807")
         .then(function(response) {
 
