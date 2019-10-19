@@ -480,18 +480,23 @@ function loadPage(pokemonName) {
 
     callApi(generatePokemonUrl (pokemonFormName))
         .then(function(pokemonData) {
-            populateMainImage(pokemonData);
-            populatePokemonBasicData(pokemonData);
-            populateLeftRightButtons(pokemonData);
-            populatePokemonStats(pokemonData);
-            populateMoves(pokemonData);
+            if (pokemonData!=null) {
+                populateMainImage(pokemonData);
+                populatePokemonBasicData(pokemonData);
+                populateLeftRightButtons(pokemonData);
+                populatePokemonStats(pokemonData);
+                populateMoves(pokemonData);
+            } else {
+                alert("Could not find pokémon: " + pokemonName);
+            }
         });
     callApi(generatePokemonSpeciesUrl(pokemonName))
         .then(function(pokemonSpeciesData) {
-            populatePokemonSpeciesBasicData(pokemonSpeciesData);
-            populateEvolutionChain(pokemonSpeciesData);
-            populatePokemonForms(pokemonSpeciesData);
-            return pokemonSpeciesData;
+            if (pokemonSpeciesData!=null) {
+                populatePokemonSpeciesBasicData(pokemonSpeciesData);
+                populateEvolutionChain(pokemonSpeciesData);
+                populatePokemonForms(pokemonSpeciesData);
+            }
         });
 }
 
