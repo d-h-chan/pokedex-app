@@ -188,8 +188,9 @@ input {
 }
 
 .pokemon-type-table {
+    margin: 0;
+    margin-bottom: 2.25px;
     width: 15px;
-    margin-bottom: 3px;
     vertical-align: middle;
 }
 
