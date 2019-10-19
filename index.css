@@ -36,6 +36,7 @@ h2, h3, h4 {
 
 h1 {
     margin: 20px;
+    margin-top: 30px;
 }
 
 h4 {
@@ -267,7 +268,7 @@ button:hover {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
-    padding-top: 8px;
+    padding-top: 7px;
     border: 1px solid #888;
     border-radius: 20px;
     width: 80%; /* Could be more or less, depending on screen size */
