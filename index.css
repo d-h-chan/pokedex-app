@@ -2,6 +2,7 @@
     box-sizing: border-box;
     text-align: center;
     font-family: 'Nunito', sans-serif;
+    margin: 0;
 }
 
 body {
@@ -12,7 +13,6 @@ div {
     width: 100%;
     height: auto;
     padding: 0;
-    margin: 0;
 }
 
 .align-vertical {
@@ -32,6 +32,10 @@ h2, h3, h4 {
     font-family: 'Nunito Sans', sans-serif;
     margin: 10px auto;
 
+}
+
+h1 {
+    margin: 20px;
 }
 
 h4 {
@@ -126,7 +130,6 @@ input, button {
 }
 
 form {
-    margin: 0;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -155,7 +158,6 @@ input {
 }
 
 .float-button {
-    margin: 0;
     font-size: 25px;
     width: 40px;
     padding: 0;
@@ -187,7 +189,6 @@ input {
 
 .pokemon-type-table {
     width: 15px;
-    margin: 0;
     margin-bottom: 3px;
     vertical-align: middle;
 }
@@ -196,12 +197,10 @@ figure {
     vertical-align: top;
     display: inline-block;
     text-align: center;
-    margin: 0;
 }
 
 .small-pokemon-image {
     vertical-align: bottom;
-    margin: 0;
 }
 
 .caption {
