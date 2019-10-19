@@ -469,7 +469,6 @@ function loadModal() {
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
-        console.log("click");
         if (event.target == modal) {
             modal.style.display = "none";
         }
