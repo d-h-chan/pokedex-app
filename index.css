@@ -5,7 +5,6 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
     background-color:#F8F8F8;
 }
 
@@ -97,12 +96,12 @@ table {
     width: 0%;
     height: 10px;
     border-radius: 2px;
-
     box-shadow: inset 1px 4px 0 rgba(255,255,255,.4), inset -1px -1px 0 rgba(0,0,0,.3);
 }
 
 .hidden {
     display: none;
+    z-index: -1;
 }
 
 .left-align {
@@ -193,7 +192,7 @@ input {
     vertical-align: middle;
 }
 
-figure{
+figure {
     vertical-align: top;
     display: inline-block;
     text-align: center;
