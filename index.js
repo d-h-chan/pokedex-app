@@ -362,7 +362,6 @@ function sortTable() {
 function populateMoves(pokemonData) {
     let moveData = {};
     let moveUrls = [];
-    console.log(pokemonData);
     for (const moves of pokemonData.moves) {
         let version_group_details = moves.version_group_details;
         for (const version_group_detail of version_group_details) {
