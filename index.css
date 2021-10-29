@@ -18,7 +18,7 @@ div {
 .align-vertical {
     display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
 }
 
 main {
@@ -56,7 +56,7 @@ img {
 
 section {
     margin: 10px;
-    padding: 20px;    
+    padding: 20px;
     background-color: white;
     border-radius: 20px;
     box-shadow: 5px 5px 10px #DCDCDC;
@@ -68,7 +68,7 @@ section {
 ul {
     list-style: none;
     margin:0;
-    padding:0; 
+    padding:0;
 }
 
 ul#js-evolution-chain li, ul#js-pokemon-forms li{
@@ -127,7 +127,7 @@ table {
 }
 
 input, button {
-     border:none;  
+     border:none;
 }
 
 form {
@@ -157,6 +157,16 @@ input {
     font-size: 16px;
     margin: 0 5px;
 }
+
+#js-pokemon-id {
+    position: absolute;
+    left: 22px;
+    top: 6px;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 14px;
+}
+
 
 .float-button {
     font-size: 25px;
@@ -262,7 +272,7 @@ button:hover {
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
-  
+
   /* Modal Content/Box */
   .modal-content {
     background-color: #fefefe;
@@ -280,7 +290,7 @@ button:hover {
     padding: 5px 10px;
     margin-right: 3px;
 }
-  
+
   /* The Close Button */
   .close {
     color: #aaa;
@@ -288,7 +298,7 @@ button:hover {
     font-size: 28px;
     font-weight: bold;
   }
-  
+
   .close:hover,
   .close:focus {
     color: black;

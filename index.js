@@ -3,6 +3,7 @@
 const url="https://pokeapi.co/api/v2/";
 const aniSpriteUrl="https://play.pokemonshowdown.com/sprites/ani/";
 const aniCryUrl="https://play.pokemonshowdown.com/audio/cries/";
+const currentLastPokemon=898;
 
 //table to convert user input to api name
 const POKEMON_NAMES_CONVERSION_SPELLING = {
@@ -96,7 +97,7 @@ function populatePokemonSpeciesBasicData(pokemonSpeciesData) {
     let flavorTextEntries = pokemonSpeciesData.flavor_text_entries;
     for (let i = 0; i < flavorTextEntries.length; i++) {
         if (flavorTextEntries[i].language.name === "en") {
-            $("#js-pokedex-entry").text(flavorTextEntries[i].flavor_text.replace(/\n\f/g, " "));
+            $("#js-pokedex-entry").text(flavorTextEntries[i].flavor_text);
             break;
         }
     }
@@ -187,6 +188,7 @@ function populatePokemonAttributeData(pokemonData) {
 //name, height, weight, cry, abilities, type
 function populatePokemonBasicData(pokemonData) {
     $("#js-pokemon-name").text(pokemonData.species.name);
+    $("#js-pokemon-id").text(`#${pokemonData.id}`);
     $("#js-pokemon-weight").text(getFullWeightData(pokemonData.weight));
     $("#js-pokemon-height").text(getFullHeightData(pokemonData.height));
     $("#js-pokemon-abilities").text(getPokemonAbilities(pokemonData));
@@ -194,10 +196,10 @@ function populatePokemonBasicData(pokemonData) {
     populatePokemonAttributeData(pokemonData);
 }
 
-//dice roll from 1-807
+//dice roll from 1-currentLastPokemon
 function getRandomPokemonNumber() {
     let min=1;
-    let max=807;
+    let max=currentLastPokemon;
     let random =
     Math.floor(Math.random() * (+max - +min)) + +min;
     return random;
@@ -360,6 +362,7 @@ function sortTable() {
 function populateMoves(pokemonData) {
     let moveData = {};
     let moveUrls = [];
+    console.log(pokemonData);
     for (const moves of pokemonData.moves) {
         let version_group_details = moves.version_group_details;
         for (const version_group_detail of version_group_details) {
@@ -440,8 +443,8 @@ function populatePokemonForms(pokemonSpeciesData) {
 
 //set pokemon id for the left and right buttons
 function populateLeftRightButtons(pokemonData) {
-    let left = (pokemonData.id === 1) ? 807 : pokemonData.id - 1;
-    let right = (pokemonData.id === 807) ? 1: pokemonData.id + 1;
+    let left = (pokemonData.id === 1) ? currentLastPokemon : pokemonData.id - 1;
+    let right = (pokemonData.id === currentLastPokemon) ? 1: pokemonData.id + 1;
     $('#js-left-button').attr("data-pokemon-id", left);
     $('#js-right-button').attr("data-pokemon-id", right);
     $('#js-left-button').prop("disabled", false);
@@ -451,8 +454,8 @@ function populateLeftRightButtons(pokemonData) {
 function validateSearch(pokemonName) {
     let pokemonNameValidated = pokemonName;
     if (!isNaN(pokemonName)) {
-        if (pokemonName > 807) {
-            pokemonNameValidated = 807;
+        if (pokemonName > currentLastPokemon) {
+            pokemonNameValidated = currentLastPokemon;
         }
         if (pokemonName < 1) {
             pokemonNameValidated = 1;
@@ -515,7 +518,7 @@ function loadModal() {
 
 function initialize() {
 
-    callApi("https://pokeapi.co/api/v2/pokemon/?limit=807")
+    callApi(`https://pokeapi.co/api/v2/pokemon/?limit=${currentLastPokemon}`)
         .then(function(response) {
 
             loadModal();
