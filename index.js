@@ -50,6 +50,7 @@ const POKEMON_NAMES_CONVERSION_FORMS = {
     "typenull": "type-null",
     "minior": "minior-red-meteor",
     "mimikyu": "mimikyu-disguised",
+    "urshifu": "urshifu-single-strike"
 };
 
 async function callApi(url) {
