@@ -96,7 +96,7 @@ function populatePokemonSpeciesBasicData(pokemonSpeciesData) {
     let flavorTextEntries = pokemonSpeciesData.flavor_text_entries;
     for (let i = 0; i < flavorTextEntries.length; i++) {
         if (flavorTextEntries[i].language.name === "en") {
-            $("#js-pokedex-entry").text(flavorTextEntries[i].flavor_text);
+            $("#js-pokedex-entry").text(flavorTextEntries[i].flavor_text.replace(/\n/g, " "));
             break;
         }
     }
@@ -123,13 +123,13 @@ function populateMainImage(pokemonData) {
         });
 }
 
-function populateCry(pokemonData) {    
+function populateCry(pokemonData) {
     $("#js-pokemon-cry-mp3")
         .attr("src", aniCryUrl + removeHyphensForShowdown(pokemonData.species.name) + ".mp3");
 }
 
 function getFullHeightData(height) {
-    let heightMeters=height/10;
+    let heightMeters = height/10;
     let heightFeet = heightMeters * 3.281;
     let heightInches = ((heightFeet%1) * 12).toFixed(0);
     if (heightInches == 12) {
@@ -149,7 +149,7 @@ function getFullWeightData(weight) {
     let words = str.split('-');
     let output = "";
     for (let i = 0; i < words.length; i++) {
-    
+
         output += words[i].charAt(0).toUpperCase() + words[i].slice(1);
         output += " "
     }
@@ -165,14 +165,14 @@ function getFullWeightData(weight) {
     }
     return abilities;
  }
- 
+
 
 function populatePokemonAttributeData(pokemonData) {
     let type1 = "";
     let type2 = ""
     if (pokemonData.types.length > 1) {
-        type1 = pokemonData.types[1].type.name;
-        type2 = pokemonData.types[0].type.name;
+        type1 = pokemonData.types[0].type.name;
+        type2 = pokemonData.types[1].type.name;
         $("#js-pokemon-type-1").attr("src",getTypeImage(type1));
         $("#js-pokemon-type-2").attr("src",getTypeImage(type2));
         $("#js-pokemon-type-2").show();
@@ -196,9 +196,9 @@ function populatePokemonBasicData(pokemonData) {
 
 //dice roll from 1-807
 function getRandomPokemonNumber() {
-    let min=1; 
-    let max=807;  
-    let random = 
+    let min=1;
+    let max=807;
+    let random =
     Math.floor(Math.random() * (+max - +min)) + +min;
     return random;
 }
@@ -226,16 +226,16 @@ $.fn.exists = function () {
 function appendFormImage(pokemonName, pokemonId) {
     let apiUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
     $.get(apiUrl)
-    .done(function() { 
+    .done(function() {
         appendFormImageUrl(pokemonName, apiUrl);
-    }) 
+    })
 }
 
 function appendFormImageUrl(pokemonName, apiUrl) {
-    
+
     //check if image exists
     $.get(apiUrl)
-    .done(function() { 
+    .done(function() {
         // Do something now you know the image exists.
         let element = $("ul").find(`[data-pokemon-name='${pokemonName}']`);
         if (!element.exists() && !pokemonName.includes("totem")) {
@@ -244,7 +244,7 @@ function appendFormImageUrl(pokemonName, apiUrl) {
                     <figure>
                         <img class ="small-pokemon-image" src="${apiUrl}"/>
                     <figcaption class="caption">${pokemonName}</figcaption>
-                    </figure>                
+                    </figure>
                 </li>`
             );
         }
@@ -319,7 +319,7 @@ function getStatColor(statValue) {
         return "#ff3200";
     }
     return "#ff0000";
-    
+
 }
 
 function populatePokemonStats(pokemonData){
@@ -327,8 +327,8 @@ function populatePokemonStats(pokemonData){
     for (const stat of arrStats) {
         $(`#js-${stat.stat.name}-display`)
             .width(`${getPercentageForStat(stat.base_stat)}%`)
-            .css("background-color", getStatColor(stat.base_stat)); 
-        $(`#js-${stat.stat.name}-value`).text(stat.base_stat);  
+            .css("background-color", getStatColor(stat.base_stat));
+        $(`#js-${stat.stat.name}-value`).text(stat.base_stat);
     }
 }
 
@@ -340,7 +340,7 @@ function sortTable() {
     while (switching) {
       switching = false;
       rows = table.rows;
-     
+
       for (i = 1; i < (rows.length - 1); i++) {
         shouldSwitch = false;
         x = rows[i].getElementsByTagName("TD")[0];
@@ -363,7 +363,7 @@ function populateMoves(pokemonData) {
     for (const moves of pokemonData.moves) {
         let version_group_details = moves.version_group_details;
         for (const version_group_detail of version_group_details) {
-            if (version_group_detail.version_group.name === "ultra-sun-ultra-moon" 
+            if (version_group_detail.version_group.name === "ultra-sun-ultra-moon"
                 && version_group_detail.move_learn_method.name === "level-up"
                 && version_group_detail.level_learned_at > 1) {
                     moveData[moves.move.name] = version_group_detail.level_learned_at;
@@ -423,7 +423,7 @@ function populatePokemonForms(pokemonSpeciesData) {
             for (const item of pokemonData) {
                 formUrls.push(item.forms[0].url);
             }
-        
+
             let formRequests = formUrls.map(url => fetch(url))
             Promise.all(formRequests)
                 .then(responses => {return responses;})
@@ -448,7 +448,7 @@ function populateLeftRightButtons(pokemonData) {
     $('#js-right-button').prop("disabled", false);
 }
 
-function validateSearch(pokemonName) { 
+function validateSearch(pokemonName) {
     let pokemonNameValidated = pokemonName;
     if (!isNaN(pokemonName)) {
         if (pokemonName > 807) {
@@ -465,7 +465,7 @@ function validateSearch(pokemonName) {
 }
 
 //master function to populate all data on page
-function loadPage(pokemonName) { 
+function loadPage(pokemonName) {
     pokemonName = validateSearch(pokemonName);
     if (pokemonName in POKEMON_NAMES_CONVERSION_SPELLING) {
         pokemonName = POKEMON_NAMES_CONVERSION_SPELLING[pokemonName];
@@ -525,37 +525,37 @@ function initialize() {
                 const searchTerm = $('#js-pokemon-search').val();
                 loadPage(searchTerm);
             });
-        
+
             $('#js-evolution-chain').on('click', 'li button', function(event) {
                 loadPage($(this).find(".caption").text());
             });
-        
+
             $('#cry-play-button').on('click', function(event){
                 $('#js-pokemon-cry-mp3')[0].play();
             });
-        
+
             $('#js-play-button').on('click', function(event){
                 $('#js-pokemon-cry-mp3')[0].play();
             });
-        
+
             $('#js-left-button').on('click', function(event){
                 loadPage($(this).attr("data-pokemon-id"));
             });
-        
+
             $('#js-right-button').on('click', function(event){
                 loadPage($(this).attr("data-pokemon-id"));
             });
-        
+
             $('#js-random-button').on('click', function(event){
                 loadPage(getRandomPokemonNumber());
             });
-        
+
             $('#js-pokemon-cry-mp3')[0].volume = 0.5;
-        
+
             loadPage("bulbasaur");
 
         }
-    );  
+    );
 }
 
 $(initialize());
