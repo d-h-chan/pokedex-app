@@ -12,6 +12,8 @@ const POKEMON_NAMES_CONVERSION_SPELLING = {
     "nidoranf": "nidoran-f",
     "mr.mime": "mr-mime",
     "mrmime": "mr-mime",
+    "mr.rime": "mr-rime",
+    "mrrime": "mr-rime",
     "hooh": "ho-oh",
     "mime.jr": "mime-jr",
     "mimejr": "mime-jr",
@@ -50,6 +52,10 @@ const POKEMON_NAMES_CONVERSION_FORMS = {
     "typenull": "type-null",
     "minior": "minior-red-meteor",
     "mimikyu": "mimikyu-disguised",
+    "eiscue": "eiscue-ice",
+    "indeedee": "indeedee-male",
+    "zacian": "zacian-hero",
+    "zamazenta": "zamazenta-hero",
     "urshifu": "urshifu-single-strike"
 };
 
