@@ -104,7 +104,7 @@ function populatePokemonSpeciesBasicData(pokemonSpeciesData) {
     let flavorTextEntries = pokemonSpeciesData.flavor_text_entries;
     for (let i = 0; i < flavorTextEntries.length; i++) {
         if (flavorTextEntries[i].language.name === "en") {
-            $("#js-pokedex-entry").text(flavorTextEntries[i].flavor_text);
+            $("#js-pokedex-entry").text(flavorTextEntries[i].flavor_text.replace(/[\r\n\f\x0B\x0C\u0085\u2028\u2029]+/g," "));
             break;
         }
     }
